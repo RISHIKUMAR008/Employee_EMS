@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginLeft from "./LoginLeft";
 import { Link } from "react-router-dom";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
 
 const Loginform = ({ role, title, subtitle }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showpassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handlesubmit = async (e) => {
+    e.preventDefault;
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       <LoginLeft />
@@ -24,6 +33,59 @@ const Loginform = ({ role, title, subtitle }) => {
               {subtitle}
             </p>
           </div>
+          {error && (
+            <div className="mb-6 p-4 bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-xl flex items-start. gap-3 ">
+              <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+              {error}
+            </div>
+          )}
+          <form className="space-y-5" onSubmit={handlesubmit}>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2 ">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+              />
+
+              <div className="relative">
+                <label className="block text-sm font-medium text-slate-700 mb-2 ">
+                  Password
+                </label>
+                <input
+                  type={showpassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="pr-11"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                  onClick={() => setShowPassword(!showpassword)}
+                >
+                  {showpassword ? (
+                    <EyeIcon size={20} />
+                  ) : (
+                    <EyeOffIcon size={20} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white rounded-md text-sm font-semibold hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50 transition-all duration-200 shadow-lg shadow-indigo-500/25 active:scale-[0.98] flex items-center justify-center"
+            >
+              {loading && <Loader2Icon className="animate-spin h-4 w-4 mr-2" />}
+              Sign In
+            </button>
+          </form>
         </div>
       </div>
     </div>
